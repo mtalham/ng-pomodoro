@@ -1,6 +1,7 @@
 button {
   margin-right: 4px;
 }
+
 .container {
   display: -webkit-box;
   display: -webkit-flex;
@@ -26,7 +27,7 @@ button {
 .time {
   font-size: 72px;
   font-weight: 400;
-  background: -webkit-linear-gradient(90deg, #ff6491,#ff8d72);
+  background: -webkit-linear-gradient(90deg, #ff6491, #ff8d72);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   //color: #fff;
@@ -47,8 +48,9 @@ button {
   text-align: center;
 }
 
-.nb-icon {
-  font-size: 40px;
+.github {
+  width: 40px;
+  height: 40px;
 }
 
 .btnIcon {
@@ -58,12 +60,40 @@ button {
   width: 60px;
   height: 60px;
   background-size: 50px;
-  -webkit-transition: opacity .3s;
-  transition: opacity .3s;
 }
 
 .btnIcon:active, .btnIcon:focus {
-  outline:0;
+  outline: 0;
   opacity: .5;
 }
 
+.controlsLink {
+  line-height: 40px;
+}
+
+.controlsLink a {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.controlsLink a:hover, .controlsLink a:focus {
+  text-decoration: underline;
+}
+
+.header, .footer {
+  display: flex;
+  flex: auto;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 18px;
+  line-height: 40px;
+}
+
+.headerTitle {
+  display: block;
+  font-size: 40px;
+  background: -webkit-linear-gradient(#0098f0, #00f2c3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}

@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Hotkeys} from './hotKeys.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'ng-pomodoro';
   time = 0;
   play = false;
@@ -15,27 +17,22 @@ export class AppComponent implements OnInit {
     {type: 'social', time: 300},
     {type: 'coffee', time: 900}
   ];
-  interval = 0;
+  private interval = 0;
+  private subs: Subscription;
 
-  constructor() {
+  constructor(private hotKeys: Hotkeys) {
   }
 
   ngOnInit(): void {
     this.setDefaultTime();
-    // this.startShortcuts();
+    this.subs = this.hotKeys.addShortcut({keys: 'space'}).subscribe(e => {
+      this.togglePlay();
+    });
     // Notification.requestPermission();
   }
 
-
-  elapseTime(): void {
-    if (this.time === 0) {
-      this.reset(0);
-      // this.alert();
-    }
-    if (this.play) {
-      this.time = this.time - 1;
-      this.title = this.getTitle(this.time);
-    }
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   format(seconds: number): string {
@@ -55,7 +52,16 @@ export class AppComponent implements OnInit {
 
   restartInterval(): void {
     clearInterval(this.interval);
-    this.interval = setInterval(this.elapseTime, 1000);
+    this.interval = setInterval(() => {
+      if (this.time === 0) {
+        this.pause();
+        // this.alert();
+      }
+      if (this.play) {
+        this.time = this.time - 1;
+        this.title = this.getTitle(this.time);
+      }
+    }, 1000);
   }
 
   handlePlay(): void {
@@ -63,23 +69,22 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.restartInterval();
     this.play = true;
+    this.restartInterval();
   }
 
-  reset(resetFor = this.time): void {
+  pause(): void {
     clearInterval(this.interval);
-    // let time = this.format(resetFor);
     this.play = false;
   }
 
-  // togglePlay() {
-  //   if (true === play) {
-  //     return this.reset();
-  //   }
-  //
-  //   return this.play();
-  // }
+  togglePlay(): void {
+    if (true === this.play) {
+      return this.pause();
+    }
+
+    return this.handlePlay();
+  }
 
   setTime(newTime: number): void {
     this.restartInterval();

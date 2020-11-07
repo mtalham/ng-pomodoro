@@ -1,8 +1,11 @@
 <nb-layout>
-
   <nb-layout-header fixed>
-    <h2>Pomodoro App</h2>
-  <!-- Insert header here -->
+    <div class="header">
+      <div class="headerTitle">Pomodoro Timer</div>
+      <a href="https://github.com/mtalham" target="_blank">
+        <nb-icon icon="github-outline" class="github" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+      </a>
+    </div>
   </nb-layout-header>
 
   <nb-layout-column>
@@ -13,9 +16,9 @@
       </div>
 
       <div class="container display">
-        <button nbButton hero shape="round" status="info" (click)="setTime(1500)">Code</button>
+        <button nbButton hero shape="round" status="success" (click)="setTime(1500)">Code</button>
         <button nbButton hero shape="round" status="info" (click)="setTime(300)">Social</button>
-        <button nbButton hero shape="round" status="info" (click)="setTime(900)">Coffee</button>
+        <button nbButton hero shape="round" status="warning" (click)="setTime(900)">Coffee</button>
       </div>
 
       <div class="container">
@@ -26,17 +29,25 @@
             icon="play-circle" [options]="{ animation: { type: 'pulse' } }"
           ></nb-icon>
           <nb-icon
-            (click)="reset()"
+            (click)="pause()"
             class="btnIcon"
             icon="pause-circle" [options]="{ animation: { type: 'pulse' } }"
-            ></nb-icon>
+          ></nb-icon>
         </div>
       </div>
     </div>
   </nb-layout-column>
 
   <nb-layout-footer fixed>
-  <!-- Insert footer here -->
+    <div class="footer">
+      <div>
+        <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">What is Pomodoro?</a>
+      </div>
+      <div>
+        <nb-icon icon="info-outline"></nb-icon>
+        <span style="margin-left: 4px">Press Spacebar to toggle timer</span>
+      </div>
+    </div>
   </nb-layout-footer>
 
 </nb-layout>
