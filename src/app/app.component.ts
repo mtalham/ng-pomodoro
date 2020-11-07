@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Hotkeys} from './hotKeys.service';
 import {Subscription} from 'rxjs';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,6 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'ng-pomodoro';
   time = 0;
   play = false;
   timeType = 0;
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private interval = 0;
   private subs: Subscription;
 
-  constructor(private hotKeys: Hotkeys) {
+  constructor(private hotKeys: Hotkeys, private titleService: Title) {
   }
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }
       if (this.play) {
         this.time = this.time - 1;
-        this.title = this.getTitle(this.time);
+        this.setTitle(this.time);
       }
     }, 1000);
   }
@@ -90,20 +90,21 @@ export class AppComponent implements OnInit, OnDestroy {
     this.restartInterval();
     this.time = newTime;
     this.timeType = newTime;
-    this.title = this.getTitle(newTime);
+    this.setTitle(newTime);
     this.play = true;
   }
 
   setDefaultTime(): void {
     this.time = 1500;
     this.timeType = 1500;
-    this.title = this.getTitle(1500);
+    this.setTitle(1500);
     this.play = false;
   }
 
-  getTitle(time: number): string {
+  setTitle(time: number): void {
     time = typeof time === 'undefined' ? this.time : time;
-    return this.format(time) + ' | Pomodoro timer';
+    const title = this.format(time) + ' | Pomodoro timer';
+    this.titleService.setTitle(title);
   }
 
   // startShortcuts() {

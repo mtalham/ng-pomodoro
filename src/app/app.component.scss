@@ -30,7 +30,6 @@ button {
   background: -webkit-linear-gradient(90deg, #ff6491, #ff8d72);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  //color: #fff;
   display: block;
   width: 100%;
   text-align: center;
@@ -86,6 +85,9 @@ button {
   align-items: center;
   justify-content: space-between;
   margin: 0 18px;
+}
+
+.header {
   line-height: 40px;
 }
 
@@ -96,4 +98,10 @@ button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
+}
+
+@media (max-width: 500px) {
+  .headerTitle {
+    font-size: 24px;
+  }
 }
